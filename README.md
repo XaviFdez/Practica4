@@ -40,3 +40,11 @@ void anotherTask(void *parameter) {
   vTaskDelete(NULL);
 }
 ```
+El funcionamiento de el código proporcionado, se basa 
+______
+
+Las salidas que se muestran ppor el puerto serie son las siguientes;
+   - this is ESP32 Task
+   - this is another Task
+
+## Segunda parte del ejercicio práctico
