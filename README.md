@@ -1,4 +1,4 @@
-# Práctica 4: Sistemas operativos en tiempo real
+# Práctica 4: SISTEMAS OPERATIVOS EN TIEMPO REAL
 ## Introducción de la práctica
 En esta práctica va enfocada en los sistemas operativos en tiempo real, especialmente la ejecución de tareas, dónde se dividirán entre ellas el tiempo de uso para realizarlas.
 
