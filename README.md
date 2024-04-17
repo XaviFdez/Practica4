@@ -11,43 +11,39 @@ void anotherTask(void *parameter);
 void setup() {
   Serial.begin(112500);
 
-  // Creamos una nueva tarea aquí
   xTaskCreate(
-      anotherTask,     // Función de la tarea
-      "another Task",  // Nombre de la tarea
-      10000,            // Tamaño de la pila de la tarea
-      NULL,             // Parámetro de la tarea
-      1,                // Prioridad de la tarea
-      NULL              // Manejador de la tarea para realizar un seguimiento de la tarea creada
+      anotherTask,     
+      "another Task",  
+      10000,           
+      NULL,             
+      1,               
+      NULL              
   );
 }
 
-// La función loop() es invocada por el loopTask de Arduino ESP32
 void loop() {
   Serial.println("this is ESP32 Task");
   delay(1000);
 }
 
-// Esta función se invocará cuando se haya creado la tarea adicional (anotherTask)
 void anotherTask(void *parameter) {
-  // Bucle infinito
+  
   for (;;) {
     Serial.println("this is another Task");
     delay(1000);
   }
 
-  // Eliminar la tarea al finalizar (esto nunca ocurrirá porque es un bucle infinito)
   vTaskDelete(NULL);
 }
 ```
-El funcionamiento de el código proporcionado, se basa --------------
+El funcionamiento de el código proporcionado, se basa en que crea 2 tareas donde se utliza un un sistema de operativo de tiempo real FreeRTOS.
 
+- **La tarea principal**: se ejecuta en la función *loop()*, imprime repetidamente un mensaje ("this is ESP32 Task") en el puerto serie y espera 1 segundo entre cada impresión.
+- **La segunda tarea**: creada en la función *setup()* y llamada anotherTask, también imprime repetidamente un mensaje ("this is another Task") en el puerto serie y espera 1 segundo entre cada impresión.
 
-Las salidas que se muestran ppor el puerto serie son las siguientes;
+Las salidas que se muestran ppor el puerto serie son las siguientes:
 ```
    - this is ESP32 Task
    - this is another Task
 ```
-______
-
 ## Segunda parte del ejercicio práctico
