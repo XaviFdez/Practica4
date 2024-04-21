@@ -91,7 +91,7 @@ void apagarLED(void *parameter) {
 ```
 En el anterior código tenemos un programa donde con la ayuda de un semáforo, se pueden utilizar dos tareas, (una que enciende el led ) y otra tarea ( que apaga el Led), en el programa se puede ver que el tiempo del DELAY es de 1 segundo, lo cual cada 1 segundo se van alternando.
 
-#### Funciones utilizadas:
-En este caso utilizamos 4 funciones o subprogramas para llevarlo a cabo.
+Funciones utilizadas:
+En este caso utilizamos 4 funciones o subprogramas para llevarlo a caso
 - 
 
