@@ -49,12 +49,13 @@ Las salidas que se muestran ppor el puerto serie son las siguientes:
 Adjunto diagrama de flujo del funcionamiento:
 ```mermaid
 graph TD;
-    A[Inicio] --> B[Serial Inicialización]
-    B --> C[Creación de tarea]
-    C --> D[Bucle principal (loop())]
+    A(Inicio) --> B(Serial Inicialización)
+    B --> C(Creación de tarea)
+    C --> D(Bucle principal (loop()))
     D --> E[Tarea secundaria (anotherTask)]
-    E --> D
-    E --> F[Eliminación de tarea]
+    E --> F(Continuar tarea secundaria)
+    F --> D
+    E --> G[Eliminación de tarea]
 ```
 ## Segunda parte del ejercicio práctico
 ```c++
