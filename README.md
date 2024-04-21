@@ -47,7 +47,7 @@ Las salidas que se muestran ppor el puerto serie son las siguientes:
    - this is another Task
 ```
 Adjunto diagrama de flujo del funcionamiento:
-```graph TD;
+``` graph TD;
     A[Inicio] --> B[Serial Inicialización]
     B --> C[Creación de tarea]
     C --> D[Bucle principal (loop())]
