@@ -46,53 +46,59 @@ Las salidas que se muestran ppor el puerto serie son las siguientes:
    - this is ESP32 Task
    - this is another Task
 ```
-Adjunto diagrama de flujo del funcionamiento:
-```mermaid
-graph TD;
-    A[Inicio] --> B[Serial Inicialización]
-    B --> C[Creación de tarea]
-    C --> D[Bucle principal (loop())]
-    D --> E[Tarea secundaria (anotherTask)]
-    E --> F[Eliminación de tarea]
-    F --> D
-```
+
 ## Segunda parte del ejercicio práctico
 ```c++
 #include <Arduino.h>
-long debouncing_time = 150; 
-volatile unsigned long last_micros;
- 
-SemaphoreHandle_t interruptSemaphore;
-void interruptHandler() {
-  xSemaphoreGiveFromISR(interruptSemaphore, NULL);
+#include <FreeRTOS.h>
+#include <task.h>
+#include <semphr.h> 
+
+// Definir el pin del LED
+const int ledPin = 11;
+
+// Crear un semáforo
+SemaphoreHandle_t semaphore;
+
+void setup() {
+    Serial.begin(115200);
+    // Inicializar el pin del LED como salida
+    pinMode(ledPin, OUTPUT);
+
+    // Crear un semáforo
+    semaphore = xSemaphoreCreateBinary();
+    
+    // Crear tareas
+    xTaskCreate(tareaEncender, "Encender LED", 1000, NULL, 1, NULL);
+    xTaskCreate(tareaApagar, "Apagar LED", 1000, NULL, 1, NULL);
 }
- 
-void TaskLed(void *pvParameters)
-{
-  (void) pvParameters;
-  pinMode(8, OUTPUT);
-  for (;;) {
-    if (xSemaphoreTake(interruptSemaphore, portMAX_DELAY) == pdPASS) {
-      digitalWrite(8, !digitalRead(8));
+
+void loop() {
+    // No hay código en el loop
+}
+
+// Tarea para encender el LED
+void EncenderT1(void *parameter) {
+    for (;;) {
+        // Esperar a que el semáforo esté disponible
+        xSemaphoreTake(semaphore, portMAX_DELAY);
+
+        // Encender el LED
+        digitalWrite(ledPin, HIGH);
+        Serial.println("LED HIGH");
+        delay(1000);
     }
-  }
 }
-void TaskBlink(void *pvParameters)
-{
-  (void) pvParameters;
-  pinMode(7, OUTPUT);
-  for (;;) {
-      digitalWrite(7, HIGH);
-      vTaskDelay(200 / portTICK_PERIOD_MS);
-      digitalWrite(7, LOW);
-      vTaskDelay(200 / portTICK_PERIOD_MS);
-  }
-}
-void debounceInterrupt() {
-  if((long)(micros() - last_micros) >= debouncing_time * 1000) {
-    interruptHandler();
-    last_micros = micros();
-  }
+
+// Tarea para apagar el LED
+void ApagarT2(void *parameter) {
+    for (;;) {
+        xSemaphoreTake(semaphore, portMAX_DELAY);
+
+        digitalWrite(ledPin, LOW);
+        Serial.println("LED LOW");
+        delay(1000);
+    }
 }
 ```
 
