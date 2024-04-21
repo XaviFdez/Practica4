@@ -47,7 +47,7 @@ Las salidas que se muestran ppor el puerto serie son las siguientes:
    - this is another Task
 ```
 
-## Segunda parte del ejercicio práctico
+## Segunda parte del ejercicio práctico - Semáforo
 ```c++
 #include <Arduino.h>
 #include <FreeRTOS.h>
@@ -69,25 +69,25 @@ void setup() {
 }
 
 void loop() {
-    
+
 }
+
 void encenderLED(void *parameter) {
     for (;;) {
-        xSemaphoreTake(semaphore, portMAX_DELAY);
-
         digitalWrite(ledPin, HIGH);
         Serial.println("LED HIGH");
         delay(1000);
+        xSemaphoreGive(semaphore); 
     }
 }
+
 void apagarLED(void *parameter) {
     for (;;) {
-        xSemaphoreTake(semaphore, portMAX_DELAY);
-
         digitalWrite(ledPin, LOW);
         Serial.println("LED LOW");
         delay(1000);
-    }
-}
+        xSemaphoreGive(semaphore); 
+    } 
 ```
+En el anterior código tenemos un programa donde con la ayuda de un **##### semáforo*
 
