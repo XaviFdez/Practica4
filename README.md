@@ -95,6 +95,23 @@ En el anterior código tenemos un programa donde con la ayuda de un semáforo, s
 
 En este codigo tenemos 4 funciones para llevarlo a cabo.
 
- - ### *Función setup()* :
+ - #### *Función setup()* :
    se inicia la comunicación serial y se configura el pin del LED como salida.
+
+ - #### *Función loop()*:
+   no es necesario realizar ninguna acción en el bucle principal.
+
+ - #### *Funciones : encenderLED() y apagarLED()*:
+   son las tareas que se ejecutarán concurrentemente. Ambas funciones son ciclos infinitos (for (;;)) que alternan entre encender y apagar el LED con un intervalo de un segundo.
+
+### Salida puerto serie:
+
+Alternando las 2 tareas, se imprime "LED HIGH" cuando el LED se enciende, y en la función apagarLED(), se imprime "LED LOW" cuando el LED se apaga. 
+
+```
+LED HIGH
+LED LOW
+LED HIGH
+```
+   
    
