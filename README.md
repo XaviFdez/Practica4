@@ -52,46 +52,35 @@ Las salidas que se muestran ppor el puerto serie son las siguientes:
 #include <Arduino.h>
 #include <FreeRTOS.h>
 #include <task.h>
-#include <semphr.h> 
+#include <semphr.h>
 
-// Definir el pin del LED
 const int ledPin = 11;
 
-// Crear un semáforo
 SemaphoreHandle_t semaphore;
 
 void setup() {
     Serial.begin(115200);
-    // Inicializar el pin del LED como salida
     pinMode(ledPin, OUTPUT);
 
-    // Crear un semáforo
     semaphore = xSemaphoreCreateBinary();
     
-    // Crear tareas
-    xTaskCreate(tareaEncender, "Encender LED", 1000, NULL, 1, NULL);
-    xTaskCreate(tareaApagar, "Apagar LED", 1000, NULL, 1, NULL);
+    xTaskCreate(encenderLED, "Encender LED", 1000, NULL, 1, NULL);
+    xTaskCreate(apagarLED, "Apagar LED", 1000, NULL, 1, NULL);
 }
 
 void loop() {
-    // No hay código en el loop
+    
 }
-
-// Tarea para encender el LED
-void EncenderT1(void *parameter) {
+void encenderLED(void *parameter) {
     for (;;) {
-        // Esperar a que el semáforo esté disponible
         xSemaphoreTake(semaphore, portMAX_DELAY);
 
-        // Encender el LED
         digitalWrite(ledPin, HIGH);
         Serial.println("LED HIGH");
         delay(1000);
     }
 }
-
-// Tarea para apagar el LED
-void ApagarT2(void *parameter) {
+void apagarLED(void *parameter) {
     for (;;) {
         xSemaphoreTake(semaphore, portMAX_DELAY);
 
