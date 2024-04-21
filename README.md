@@ -36,6 +36,7 @@ void anotherTask(void *parameter) {
   vTaskDelete(NULL);
 }
 ```
+### Funcionamiento y salida por terminal
 El funcionamiento de el código proporcionado, se basa en que crea 2 tareas donde se utliza un un sistema de operativo de tiempo real FreeRTOS.
 
 - **La tarea principal**: se ejecuta en la función *loop()*, imprime repetidamente un mensaje ("this is ESP32 Task") en el puerto serie y espera 1 segundo entre cada impresión.
@@ -101,6 +102,8 @@ void apagarLED(void *parameter) {
         xSemaphoreGive(semaphore); 
     } 
 ```
+### Funcionamiento y salida por terminal
+
 En el anterior código tenemos un programa donde con la ayuda de un semáforo, se pueden utilizar dos tareas, (una que enciende el led ) y otra tarea ( que apaga el Led), en el programa se puede ver que el tiempo del DELAY es de 1 segundo, lo cual cada 1 segundo se van alternando.
 
 ### Funciones / Subprogramas utilizados: 
